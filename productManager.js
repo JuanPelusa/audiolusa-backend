@@ -1,18 +1,57 @@
-class Productmanager {
+const fs = require ('fs');
+
+class productManager {
     #products
-    static idProduct = 0
+    #path
+
     constructor (){
-        this.#products = []
+        this.#products = [];
+        this.#path = './data/products.json';
+        this.#readProductsInFile();
+
     }
+
+    /* Random id assignment */
+
+    #assignId() {
+        let id = 1;
+        if(this.#products.length !==0)
+        id = this.#products[this.#products.length - 1].id + 1;
+    return id;
+    }
+
+    #readProductsInFile() {
+        try {
+            if(fs.existsSync(this.#path))
+                this.#products = JSON.parse(fs.readFileSync(this.#path, 'utf-8'));    
+                console.log('Reading file succesfully');
+
+            return [];
+        }
+        catch (error) {
+            console.log(`Error reading file, ${error}`);
+        }
+    }
+
+    #saveFile() {
+        try {
+            fs.writeFileSync(this.#path, JSON.stringify(this.#products))
+        }
+        catch (error) {
+            console.log(`Error saving file, ${error}`);
+        }
+    }
+
     addProduct(title, description, price, image, code, stock) {
         if (!title || !description || !price || !image || !code || !stock)
         return 'All data are required (title, description, price, image, code, stock)'
-     const codeRepeat = this.#products.some(p => p.code == code)
-     if (codeRepeat)
+     const codeRepeat = this.#products.some(p => p.code == code) 
+     if (codeRepeat) {
         return `The code ${code} is already busy, please try again`
-        
-        Productmanager.idProduct = Productmanager.idProduct +1
-        const id = Productmanager.idProduct
+     }
+
+        productManager.idProduct = productManager.idProduct +1
+        const id = this.#assignId();
         const newProduct = {
             id,
             title,
@@ -23,7 +62,8 @@ class Productmanager {
             stock
         };
         this.#products.push(newProduct)
-        
+        this.#saveFile()
+
         return'Product added successfully'
     }
     getProducts(){
@@ -31,13 +71,40 @@ class Productmanager {
     }
     getProductsById(id){
         const product = this.#products.find(p => p.id == id)
-        if (product)
-            return product
-        else
-            return `Not Found`
+            return product ? product: 'Not found';
+
     }
+
+
+updateProduct(id, updateProd) {
+    let msg = `The product with id ${id} doesnt exist`;
+
+    const index = this.#products.findIndex(p => p.id === id);
+    if (index !== -1) {
+
+        const {id: prodId, ...rest} = updateProd;
+        this.#products[index] = {...this.#products[index], ...rest};
+        this.#saveFile();
+        msg = 'product updated';
+    }
+
+    return msg
+}
+
+eraseProduct(id) {
+    let msg = `The product with id ${id} doesnt exist`;
+
+    const index = this.#products.findIndex(p => p.id === id);
+    if (index !== -1) {
+        this.#products.splice(index, 1);
+        this.#saveFile();
+        msg = 'product deleted';
+    }
+
+    return msg;
+}
 }
 
 
 
-module.exports = Productmanager
+module.exports = productManager
