@@ -22,16 +22,17 @@ console.log(producto.addProduct('Bowers & Wilkins 705 s3', 'Bookshelf 2-way loud
 
 /* Delete product test */
 
-//console.log(producto.eraseProduct(1));
+//console.log(producto.eraseProduct(5));
 
 
 /* Testing update */
 
 //const updateTest  = 
-// {
-//  title: 'Bowers & Wilkins 801',
-//  description: 'Floorstanding loudspeaker',
-//  price: 41000,
-//  image: 'https://www.bowerswilkins.com/en-us/'
-//  };
+//    {
+//        id: 25,
+//        title: 'Bowers & Wilkins 801',
+//        description: 'Floorstanding loudspeaker',
+//        price: 41000,
+//        image: 'https://www.bowerswilkins.com/en-us/'
+//    };
 //console.log(producto.updateProduct(1, updateTest));
