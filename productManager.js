@@ -7,7 +7,7 @@ class productManager {
     constructor (){
         this.#products = [];
         this.#path = './data/products.json';
-        this.#readProductsInFile();
+        this.readProductsInFile();
     }
 
 /* Adding products */
@@ -20,7 +20,7 @@ class productManager {
         return `The code ${code} is already busy, please try again`
     }
         productManager.idProduct = productManager.idProduct +1
-        const id = this.#assignId();
+        const id = this.assignId();
         const newProduct = {
             id,
             title,
@@ -32,7 +32,7 @@ class productManager {
         };
 
         this.#products.push(newProduct)
-        this.#saveFile()
+        this.saveFile()
 
         return'Product added successfully'
     }
@@ -52,7 +52,7 @@ class productManager {
 
     /* Automatic auto-incrementing id */
 
-    #assignId() {
+    assignId() {
         let id = 1;
             if(this.#products.length !==0)
             id = this.#products[this.#products.length - 1].id + 1;
@@ -61,7 +61,7 @@ class productManager {
 
 /* Reading products */
 
-    #readProductsInFile() {
+    readProductsInFile() {
         try {
             if(fs.existsSync(this.#path))
                 this.#products = JSON.parse(fs.readFileSync(this.#path, 'utf-8'));    
@@ -75,7 +75,7 @@ class productManager {
 
 /* Saving files*/
 
-    #saveFile() {
+    saveFile() {
         try {
             fs.writeFileSync(this.#path, JSON.stringify(this.#products))
         }
@@ -94,7 +94,7 @@ updateProduct(id, updateProd) {
     if (index !== -1) {
         const {id: prodId, ...rest} = updateProd;
         this.#products[index] = {...this.#products[index], ...rest};
-        this.#saveFile();
+        this.saveFile();
         alert = 'Product updated';
     }
     return alert
@@ -109,7 +109,7 @@ eraseProduct(id) {
     const index = this.#products.findIndex(p => p.id === id);
     if (index !== -1) {
         this.#products.splice(index, 1);
-        this.#saveFile();
+        this.saveFile();
         alert = 'Product deleted';
     }
         return alert;
