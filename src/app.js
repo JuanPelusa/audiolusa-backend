@@ -26,6 +26,10 @@ app.get('/products', async (req, res) => {
 app.get('/products/:pid', async (req, res) => {
 
     let { pid } = req.params;
+
+    if (isNaN(pid)) {
+        return res.status(400).send({error: 'ID must be a number'});
+    }
     
     try {
         let product = await p.getProductsById(Number(pid));
