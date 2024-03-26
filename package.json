@@ -1,7 +1,7 @@
 {
     "name": "audiolusa-backend",
     "version": "1.0.0",
-    "description": "",
+    "description": "High end and hi-fi audio store",
     "main": "productManager.js",
     "type": "module",
     "scripts": {
