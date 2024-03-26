@@ -9,16 +9,17 @@ const p = new productManager();
 /* Get all products */
 
 app.get('/products', async (req, res) => {
-    
+
     let limit = req.query.limit;
 
     try {
         let allProducts = await p.getProducts(limit);
-        res.json({ allProducts });
+        res.status(200).json({ allProducts });
+        console.log('Response Limit:', { allProducts, limit });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');
-    }
+    }   
 });
 
 /* Get product by id */
@@ -34,6 +35,7 @@ app.get('/products/:pid', async (req, res) => {
     try {
         let productById = await p.getProductsById(Number(pid));
         res.json({ productById });
+        console.log('Response ID:', { productById });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');
