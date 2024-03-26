@@ -13,8 +13,8 @@ app.get('/products', async (req, res) => {
     let limit = req.query.limit;
 
     try {
-        let products = await p.getProducts(limit);
-        res.json({ products });
+        let allProducts = await p.getProducts(limit);
+        res.json({ allProducts });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');
@@ -32,8 +32,8 @@ app.get('/products/:pid', async (req, res) => {
     }
     
     try {
-        let product = await p.getProductsById(Number(pid));
-        res.json({ product });
+        let productById = await p.getProductsById(Number(pid));
+        res.json({ productById });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');
