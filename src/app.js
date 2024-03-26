@@ -34,7 +34,7 @@ app.get('/products/:pid', async (req, res) => {
     
     try {
         let productById = await p.getProductsById(Number(pid));
-        res.json({ productById });
+        res.status(200).json({ productById });
         console.log('Response ID:', { productById });
     } catch (error) {
         console.log(error);
