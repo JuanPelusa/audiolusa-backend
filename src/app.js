@@ -13,9 +13,9 @@ app.get('/products', async (req, res) => {
     let limit = req.query.limit;
 
     try {
-        let allProducts = await p.getProducts(limit);
-        res.status(200).json({ allProducts });
-        console.log('Response Limit:', { allProducts, limit });
+        let products = await p.getProducts(limit);
+        res.status(200).json({ products });
+        console.log('Response Limit:', { products, limit });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');
