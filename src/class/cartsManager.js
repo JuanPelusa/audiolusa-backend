@@ -10,6 +10,8 @@ class cartsManager {
         this.readCartsFromFile();
     }
 
+    /* Creating carts */
+
     async createCart() {
         try {
             const newCart = {
@@ -25,13 +27,19 @@ class cartsManager {
         }
     }
 
+    /* Getting carts */
+
     async getCarts() {
         return this.#carts;
     }
 
+    /* Getting carts by id */
+
     async getCartById(id) {
         return this.#carts.find(cart => cart.id === id) || 'Not found';
     }
+
+    /* Reading carts */
 
     async readCartsFromFile() {
         try {
@@ -44,6 +52,8 @@ class cartsManager {
             return 'An error occurred while reading the carts file';
         }
     }
+
+    /* Adding products to existing carts */
 
     async addProductToCart(cid, pid) {
         try {
@@ -71,6 +81,8 @@ class cartsManager {
         }
     } 
 
+    /* Saving carts */
+
     async saveCartsToFile() {
         try {
             await fs.promises.writeFile(this.#path, JSON.stringify(this.#carts));
@@ -80,6 +92,8 @@ class cartsManager {
             return 'An error occurred while saving the carts file';
         }
     }
+
+    /* Assing id to carts */
 
     assignId() {
         let id = 1;
