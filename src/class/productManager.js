@@ -11,10 +11,10 @@ class productManager {
 
     /* Adding products */
 
-    async addProduct(title, description, price, image, code, stock) {
+    async addProduct(title, description, code, price, status = true, stock, images = [], category) {
         try {
-            if (!title || !description || !price || !image || !code || !stock)
-                return 'All data are required (title, description, price, image, code, stock)';
+            if (!title || !description || !code || !price || !status || !stock || !images || !category)
+                return 'All data are required (title, description, code, price, status, stock, image, category)';
 
             const codeRepeat = this.#products.some(p => p.code === code);
             if (codeRepeat) {
@@ -27,16 +27,22 @@ class productManager {
                 id,
                 title,
                 description,
-                price,
-                image,
                 code,
-                stock
+                price,
+                status,
+                stock,
+                images,
+                category  
             };
 
             this.#products.push(newProduct);
             await this.saveFile();
 
-            return 'Product added successfully';
+            return {
+                msg: 'Product added successfully',
+                product: newProduct
+            };
+            
         } catch (error) {
             console.log(`Error adding product: ${error}`);
             return 'An error occurred while adding the product';
