@@ -61,6 +61,8 @@ class productManager {
     /* Getting products by id  */
 
     async getProductsById(id) {
+        let products = await this.getProducts();
+        console.log(products);
         let product = this.#products.find(p => p.id === id);
         return product ? product : 'Not found';
     }
