@@ -4,6 +4,23 @@ import cartsManager from '../class/cartsManager.js';
 const router = Router();
 const c = new cartsManager();
 
+/* Get all carts */
+
+router.get('/all/carts', async (req, res) => {
+    try {
+        let { all, carts } = req.params;
+        let allCarts = await c.getCarts(all, carts);
+        if (allCarts === 'Not found') {
+            res.status(404).json({ error: 'Cart not found' });
+        } else {
+            res.json({ allCarts });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('An error occurred');
+    }
+});
+
 /* Get a cart by ID */
 
 router.get('/:cid', async (req, res) => {

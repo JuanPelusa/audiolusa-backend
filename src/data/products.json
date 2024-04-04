@@ -25,5 +25,16 @@
         "image": "https://www.dali-speakers.com/",
         "code": "kjh976gs",
         "stock": 3
+    },
+    {
+        "id": 4,
+        "title": "B&W Pi7 S2",
+        "description": "Wireless Headphones",
+        "code": "asd787kj",
+        "price": 500,
+        "status": true,
+        "stock": 7,
+        "images": "../images/Pi7_midnightblue-removebg-preview.png",
+        "category": "headphones"
     }
 ]
