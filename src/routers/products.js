@@ -2,7 +2,7 @@ import { Router } from 'express';
 import productManager from '../class/productManager.js';
 
 const router = Router();
-const p = new productManager();
+const p = new productManager('./src/data/products.json');
 
 /* Get all products */
 
@@ -13,7 +13,8 @@ router.get('/', async (req, res) => {
     try {
         let products = await p.getProducts(limit);
         res.status(200).json({ products });
-        console.log('Response Limit:', { products, limit });
+        console.log('Response products:', { products })
+        console.log('Response Limit:', { limit });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');

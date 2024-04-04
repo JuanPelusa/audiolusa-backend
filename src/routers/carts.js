@@ -2,7 +2,7 @@ import { Router } from 'express';
 import cartsManager from '../class/cartsManager.js';
 
 const router = Router();
-const c = new cartsManager();
+const c = new cartsManager('./src/data/carts.json');
 
 /* Get all carts */
 

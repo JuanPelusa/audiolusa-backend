@@ -3,9 +3,10 @@ import fs from "fs";
 class productManager {
   #products;
   #path;
-  constructor() {
+  constructor(fileRoute) {
     this.#products = [];
-    this.#path = "./src/data/products.json";
+    this.#path = fileRoute;
+    console.log("Accesing constructor")
     this.readProductsInFile();
   }
 
