@@ -3,24 +3,25 @@ const socket = io();
 let productUl = document.getElementById('products');
 
 socket.on('New product', newProduct => {
+    const p = newProduct.product
     productUl.innerHTML+=
     `
     <tr>
-                <td>${newProduct.id}</td>
-                <td>${newProduct.title}</td>
-                <td>${newProduct.description}</td>
-                <td>${newProduct.code}</td>
-                <td>${newProduct.price}</td>
-                <td>${newProduct.status}</td>
-                <td>${newProduct.stock}</td>
-                <td>${newProduct.category}</td>
-                <td>${newProduct.image}</td>
+                <td>${p.id}</td>
+                <td>${p.title}</td>
+                <td>${p.description}</td>
+                <td>${p.code}</td>
+                <td>${p.price}</td>
+                <td>${p.status}</td>
+                <td>${p.stock}</td>
+                <td>${p.category}</td>
+                <td>${p.image}</td>
             </tr>`
 })
 
 socket.on('Product deleted', productErased => {
     productUl.innerHTML = ''
     productErased.forEach(p => {
-        productUl.innerHTML+=`<td>${p.product}</td>`
+        productUl.innerHTML+=`<td>${p.product.id}</td>`
     });
 })

@@ -1,10 +1,8 @@
 import { Router } from 'express';
 import productManager from '../dao/productManager.js';
-import path from "path";
-import __dirname from "../utils.js";
 
 const router = Router();
-const p = new productManager(path.join(__dirname, "/data/products.json"));
+const p = new productManager('./src/data/products.json');
 
 router.get('/', async (req, res) => {
     try {
