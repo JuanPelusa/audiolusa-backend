@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import productManager from '../class/productManager.js';
+import productManager from '../dao/productManager.js';
+
 
 const router = Router();
 const p = new productManager('./src/data/products.json');
@@ -13,8 +14,8 @@ router.get('/', async (req, res) => {
     try {
         let products = await p.getProducts(limit);
         res.status(200).json({ products });
-        console.log('Response products:', { products })
-        console.log('Response Limit:', { limit });
+        console.log({ products })
+        console.log({ limit });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');
@@ -34,7 +35,7 @@ router.get('/:pid', async (req, res) => {
     try {
         let productById = await p.getProductsById(Number(pid));
         res.status(200).json({ productById });
-        console.log('Response ID:', { productById });
+        console.log({ productById });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');
