@@ -5,7 +5,7 @@ import { engine } from "express-handlebars";
 import path from 'path';
 import __dirname from './utils.js';
 import viewsRouter from './routers/viewsRouter.js';
-import { Server } from "http";
+import { Server } from 'socket.io';
 
 const app = express();
 const PORT = 3000;

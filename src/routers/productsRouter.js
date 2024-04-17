@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import productManager from '../dao/productManager.js';
 import { io } from '../app.js';
+import path from "path";
+import __dirname from "../utils.js";
 
 const router = Router();
-const p = new productManager('./src/data/products.json');
+const p = new productManager(path.join(__dirname, "/data/products.json"));
 
 /* Get all products */
 
@@ -46,13 +48,15 @@ router.post('/', async (req, res) => {
     try {
         let { title, description, code, price, status, stock, images, category } = req.body;
         let result = await p.addProduct(title, description, code, price, status, stock, images, category);
-        req.io.emit('New product', result);
+        io.emit('New product', result);
+        res.setHeader('Content-Type','text/html');
         res.status(200).json({ result });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');
     }
-
+    
+    
 });
 
 router.put('/:pid', async (req, res) => {
@@ -70,6 +74,7 @@ router.delete('/:pid', async (req, res) => {
     try {
         const { pid } = req.params;
         const result = await p.eraseProduct(Number(pid));
+        res.setHeader('Content-Type','application/json');
         res.json({ result });
     } catch (error) {
         console.log(error);

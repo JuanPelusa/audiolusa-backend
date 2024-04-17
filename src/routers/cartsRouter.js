@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import cartsManager from '../dao/cartsManager.js';
+import path from "path";
+import __dirname from "../utils.js";
 
 const router = Router();
-const c = new cartsManager('./src/data/carts.json');
+const c = new cartsManager(path.join(__dirname, "/data/products.json"));
 
 /* Get all carts */
 
