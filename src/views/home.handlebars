@@ -6,9 +6,16 @@
         <a class="linkTo" href="/">Home</a>
       </li>
       <li>
-        <a class="linkTo" href="/realTimeProducts">Real Time Products</a>
+        <a class="linkTo" href="/products">Products</a>
       </li>
     </ul>
   </nav>
 </header>
-
+<main>
+    <div>
+        {{#each products}}
+            <p style="text-align: center;">{{title}}</p>
+            <p style="text-align: center; color:chocolate">{{category}}</p>
+        {{/each}}
+    </div>
+</main>

@@ -6,7 +6,7 @@ class productManager {
   constructor(fileRoute) {
     this.#products = [];
     this.#path = fileRoute;
-    console.log("Accessing products constructor")
+    console.log("Accesing constructor")
     this.readProductsInFile();
   }
 
@@ -38,8 +38,7 @@ class productManager {
 
       this.#products.push(newProduct);
       await this.saveFile();
-      console.log("Product added successfully");
-      console.log(newProduct);
+
       return {
         msg: "Product added successfully",
         product: newProduct,
@@ -81,7 +80,7 @@ class productManager {
     try {
       if (fs.existsSync(this.#path))
         this.#products = JSON.parse(await fs.promises.readFile(this.#path, "utf-8"));
-      console.log("Reading products file successfully");
+      console.log("Reading file successfully");
     } catch (error) {
       console.log(`Error reading file, ${error}`);
     }
@@ -108,9 +107,8 @@ class productManager {
         const { id: prodId, ...rest } = updateProd;
         this.#products[index] = { ...this.#products[index], ...rest };
         await this.saveFile();
-        alert = "Product updated";       
+        alert = "Product updated";
       }
-      console.log("Product updated");
       return alert;
     } catch (error) {
       console.log(`Error updating product: ${error}`);

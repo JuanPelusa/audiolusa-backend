@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import productManager from '../dao/productManager.js';
-
+import { io } from '../app.js';
 
 const router = Router();
 const p = new productManager('./src/data/products.json');
@@ -14,8 +14,8 @@ router.get('/', async (req, res) => {
     try {
         let products = await p.getProducts(limit);
         res.status(200).json({ products });
-        console.log({ products })
-        console.log({ limit });
+        console.log('Response products:', { products })
+        console.log('Response Limit:', { limit });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');
@@ -35,7 +35,7 @@ router.get('/:pid', async (req, res) => {
     try {
         let productById = await p.getProductsById(Number(pid));
         res.status(200).json({ productById });
-        console.log({ productById });
+        console.log('Response ID:', { productById });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');
@@ -46,11 +46,13 @@ router.post('/', async (req, res) => {
     try {
         let { title, description, code, price, status, stock, images, category } = req.body;
         let result = await p.addProduct(title, description, code, price, status, stock, images, category);
-        res.json({ result });
+        req.io.emit('New product', result);
+        res.status(200).json({ result });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');
     }
+
 });
 
 router.put('/:pid', async (req, res) => {
@@ -73,6 +75,7 @@ router.delete('/:pid', async (req, res) => {
         console.log(error);
         res.status(500).send('An error has occurred');
     }
+    req.io.emit('Product deleted', products)
 });
 
 

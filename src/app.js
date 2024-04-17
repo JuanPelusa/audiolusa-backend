@@ -1,46 +1,39 @@
 import express from "express";
-import { Server } from 'socket.io';
+import productsRouter from './routers/productsRouter.js';
+import cartsRouter from './routers/cartsRouter.js';
 import { engine } from "express-handlebars";
-import products from './routers/products.js';
-import carts from './routers/carts.js';
-import views from './routers/views.js';
 import path from 'path';
-import __dirname from './utils.js'
-import productManager from "./dao/productManager.js";
+import __dirname from './utils.js';
+import viewsRouter from './routers/viewsRouter.js';
+import { Server } from "http";
 
 const app = express();
 const PORT = 3000;
 
-const p = new productManager(path.join(__dirname, "/data/products.json"));
-
 app.engine('handlebars', engine());
-app.set('views', __dirname + '/views');
 app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, '/views'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}))
-app.use(express.static(__dirname + '/public'))
- 
-app.use('/', views);
-app.use('/api/products', products);
-app.use('/api/carts', carts);
+app.use(express.static(path.join(__dirname, '/public')));
+app.use('/', viewsRouter);
 
-
-
-const expressServer= app.listen(PORT, () => {
-    console.log(`Running on ${PORT}`);
-});
-const socketServer = new Server(expressServer);
-
-socketServer.on('connection', socket => {
-    console.log('client connected');
-    let products = p.getProducts();
-    socket.emit('products', products)
-    
+app.get('/', (req, res) => {
+    return res.status(200).render('home');
 })
 
+app.use('/api/products', productsRouter);
+app.use('/api/carts', cartsRouter);
 
+const server = app.listen(PORT, () => {
+    console.log(`Running on ${PORT}`);
+});
 
+export const io =  new Server(server)
 
-//<script src="/socket.io/socket.io.js"></script>
-  //  <script src="/js/index.js"></script>
+io.on('connection', socket => {
+    console.log(`Connection success`)
+})
+
+io.emit('New product'. products)

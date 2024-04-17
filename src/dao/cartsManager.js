@@ -7,7 +7,6 @@ class cartsManager {
     constructor(fileRoute) {
       this.#carts = [];
       this.#path = fileRoute;
-      console.log("Accessing carts constructor")
       this.readCartsFromFile();
     }
 
@@ -68,10 +67,10 @@ class cartsManager {
           } else {
               const p = new productManager('./src/data/products.json');
               await p.readProductsInFile()
-              const product = await p.getProductsById(pid);
+              const product = JSON.stringify(await p.getProductsById(pid), null, 5);
               console.log({product, pid})
   
-              if ( !product || product === "Not found" ) {
+              if (product === "Not found" ) {
                   return `Product with id ${pid} not found`;
               }
               cart.products.push({ id: pid, quantity: 1 });
