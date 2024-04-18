@@ -6,7 +6,7 @@ socket.on('New product', newProduct => {
     const p = newProduct.product
     productUl.innerHTML+=
     `
-    <tr>
+    <tr id='product-${p.id}'>
                 <td>${p.id}</td>
                 <td>${p.title}</td>
                 <td>${p.description}</td>
@@ -15,13 +15,11 @@ socket.on('New product', newProduct => {
                 <td>${p.status}</td>
                 <td>${p.stock}</td>
                 <td>${p.category}</td>
-                <td>${p.image}</td>
+                <td>${p.images}</td>
             </tr>`
 })
 
 socket.on('Product deleted', productErased => {
-    productUl.innerHTML = ''
-    productErased.forEach(p => {
-        productUl.innerHTML+=`<td>${p.product.id}</td>`
-    });
+    let p = document.querySelectorAll(`#product-${productErased}`);
+    p.forEach(e => e.remove());
 })

@@ -49,7 +49,6 @@ router.post('/', async (req, res) => {
         let { title, description, code, price, status, stock, images, category } = req.body;
         let result = await p.addProduct(title, description, code, price, status, stock, images, category);
         io.emit('New product', result);
-        res.setHeader('Content-Type','text/html');
         res.status(200).json({ result });
     } catch (error) {
         console.log(error);
@@ -73,14 +72,15 @@ router.put('/:pid', async (req, res) => {
 router.delete('/:pid', async (req, res) => {
     try {
         const { pid } = req.params;
-        const result = await p.eraseProduct(Number(pid));
-        res.setHeader('Content-Type','application/json');
+        let result = await p.eraseProduct(Number(pid));
+        
         res.json({ result });
+        io.emit('Product deleted', pid)
     } catch (error) {
         console.log(error);
         res.status(500).send('An error has occurred');
     }
-    req.io.emit('Product deleted', products)
+    
 });
 
 
