@@ -14,7 +14,7 @@ console.log(product.addProduct('Bowers & Wilkins 705 s3', 'Bookshelf 2-way louds
 
 /* Get products by id test */
 
-console.log(product.getProductsById(1));
+//console.log(product.getProductsById(1));
 
 /* Get products by id "not found" test */
 

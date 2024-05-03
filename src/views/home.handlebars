@@ -1,0 +1,21 @@
+<header>
+  <nav class="container-fluid mainHeader">
+    <img class="fluff" src="/images/logo-brand-3d.png" alt="">
+    <ul>
+      <li>
+        <a class="linkTo" href="/">Home</a>
+      </li>
+      <li>
+        <a class="linkTo" href="/products">Products</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+<main>
+    <div>
+        {{#each products}}
+            <p style="text-align: center;">{{title}}</p>
+            <p style="text-align: center; color:chocolate">{{category}}</p>
+        {{/each}}
+    </div>
+</main>

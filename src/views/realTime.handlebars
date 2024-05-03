@@ -1,0 +1,49 @@
+<header>
+  <nav class="container-fluid mainHeader">
+    <img class="fluff" src="/images/logo-brand-3d.png" alt="">
+    <ul>
+      <li>
+        <a class="linkTo" href="/">Home</a>
+      </li>
+      <li>
+        <a class="linkTo" href="/realTime">Products</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+<main>
+    <h3 style="text-align: center; font-size:large">all products</h3>
+    <table class="container">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>description</th>
+            <th>code</th>
+            <th>price</th>
+            <th>status</th>
+            <th>stock</th>
+            <th>category</th>
+            <th>image</th>
+          </tr>
+        </thead>
+        <tbody id="products">
+          {{#each products}}
+            <tr id="product-{{id}}">
+                <td>{{id}}</td>
+                <td>{{title}}</td>
+                <td>{{description}}</td>
+                <td>{{code}}</td>
+                <td>{{price}}</td>
+                <td>{{status}}</td>
+                <td>{{stock}}</td>
+                <td>{{category}}</td>
+                <td>{{images}}</td>
+            </tr>
+          {{/each}}  
+        </tbody>
+    </table>
+</main>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/socket.js"></script> 
