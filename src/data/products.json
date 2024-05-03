@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
     {
         "id": 1,
@@ -33,3 +34,6 @@
         "category": "speakers"
     }
 ]
+=======
+[{"id":1,"title":"Focal Maestro Utopia Evo","description":"Speaker","price":40000,"status":true,"images":"https://www.focal.com/es","code":"hgi547uy","stock":5,"category":"speakers"},{"id":2,"title":"Dali Epicon 8","description":"Floorstanding loudspeaker","price":15000,"status":true,"images":"https://www.dali-speakers.com/","code":"jko802pf","stock":3,"category":"speakers"},{"id":3,"title":"Dali Diablo Utopia Evo","description":"Bookshelf 2-way loudspeaker","price":12000,"status":true,"images":"https://www.dali-speakers.com/","code":"kjh976gs","stock":3,"category":"speakers"}]
+>>>>>>> b4c638f7d4e4f83efeb2f4dbfc71dc1ae24daa26

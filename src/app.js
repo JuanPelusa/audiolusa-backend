@@ -6,7 +6,10 @@ import path from 'path';
 import __dirname from './utils.js';
 import viewsRouter from './routers/viewsRouter.js';
 import { Server } from 'socket.io';
+<<<<<<< HEAD
 import mongoose from "mongoose";
+=======
+>>>>>>> b4c638f7d4e4f83efeb2f4dbfc71dc1ae24daa26
 
 const app = express();
 const PORT = 3000;
@@ -37,6 +40,7 @@ io.on('connection', socket => {
     console.log(`Connection success`)
 })
 
+<<<<<<< HEAD
 io.emit('New product'. products)
 
 const connectionToDB = async() => {
@@ -54,3 +58,6 @@ const connectionToDB = async() => {
 }
 
 connectionToDB()
+=======
+io.emit('New product'. products)
+>>>>>>> b4c638f7d4e4f83efeb2f4dbfc71dc1ae24daa26

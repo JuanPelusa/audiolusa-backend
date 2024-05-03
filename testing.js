@@ -1,12 +1,14 @@
-const productManager = require("./productManager");
+// const productManager = require("./productManager");
 
-const product = new productManager()
+// import productManager from "./productManager.js";
 
-console.log(product.addProduct('Focal Maestro Utopia Evo', 'Speaker', 40000,'https://www.focal.com/es','hgi547uy', 5));
-console.log(product.addProduct('Dali Epicon 8', 'Floorstanding loudspeaker', 15000,'https://www.dali-speakers.com/','jko802pf', 3));
-console.log(product.addProduct('Dali Diablo Utopia Evo', 'Bookshelf 2-way loudspeaker', 12000,'https://www.dali-speakers.com/','kjh976gs', 3));
-console.log(product.addProduct('Focal Sub Utopia EM Evo', 'Subwoofer', 25000,'https://www.focal.com/es','yio831cv', 3));
-console.log(product.addProduct('Bowers & Wilkins 705 s3', 'Bookshelf 2-way loudspeaker', 3200,'https://www.bowerswilkins.com/en-us/','lfo467hg', 3));
+// const product = new productManager()
+
+// console.log(product.addProduct('Focal Maestro Utopia Evo', 'Speaker', 40000,'https://www.focal.com/es','hgi547uy', 5));
+// console.log(product.addProduct('Dali Epicon 8', 'Floorstanding loudspeaker', 15000,'https://www.dali-speakers.com/','jko802pf', 3));
+// console.log(product.addProduct('Dali Diablo Utopia Evo', 'Bookshelf 2-way loudspeaker', 12000,'https://www.dali-speakers.com/','kjh976gs', 3));
+// console.log(product.addProduct('Focal Sub Utopia EM Evo', 'Subwoofer', 25000,'https://www.focal.com/es','yio831cv', 3));
+// console.log(product.addProduct('Bowers & Wilkins 705 s3', 'Bookshelf 2-way loudspeaker', 3200,'https://www.bowerswilkins.com/en-us/','lfo467hg', 3));
 
 /* Get products test */
 
