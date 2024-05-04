@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
     let exist = await p.getProductsBy({ code });
         if (exist) {
           return res.status(400).json({
-            error: `There is already another product with the code ${toUpdate.code}`,
+            error: `There is already another product with the code ${code}`,
           });
         }
     try {
