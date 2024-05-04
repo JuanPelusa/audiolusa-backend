@@ -1,6 +1,6 @@
 import fs from "fs";
 
-class productManagerFs {
+class productManager {
   #products;
   #path;
   constructor(fileRoute) {
@@ -17,7 +17,11 @@ class productManagerFs {
       if (!title || !description || !code || !price || !status || !stock || !images || !category)
         return "All data are required (title, description, code, price, status, stock, image, category)";
 
-      
+      const codeRepeat = this.#products.some(p => p.code === code);
+      if (codeRepeat) {
+        return `The code ${code} is already busy, please try again`;
+      }
+
       let id = this.assignId();
 
       const newProduct = {
@@ -132,5 +136,4 @@ class productManagerFs {
   }
 }
 
-export default productManagerFs
-;
+export default productManager;
