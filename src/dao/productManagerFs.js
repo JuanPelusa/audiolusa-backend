@@ -17,11 +17,7 @@ class productManagerFs {
       if (!title || !description || !code || !price || !status || !stock || !images || !category)
         return "All data are required (title, description, code, price, status, stock, image, category)";
 
-      const codeRepeat = this.#products.some(p => p.code === code);
-      if (codeRepeat) {
-        return `The code ${code} is already busy, please try again`;
-      }
-
+      
       let id = this.assignId();
 
       const newProduct = {
