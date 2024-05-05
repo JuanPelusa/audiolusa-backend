@@ -77,4 +77,44 @@ router.post('/:cid/product/:pid', async (req, res) => {
     }
 });
 
+router.delete('/:cid/product/:pid', async (req, res) => {
+    const { cid, pid } = req.params;
+
+    if (!isValidObjectId(cid, pid)) {
+        return res.status(400).json({ error: "Invalid id" });
+    }
+
+    try {
+        const updatedCart = await c.removeProductFromCart(cid, pid);
+        res.json({ payload: `Product ${pid} removed from cart ${cid}`, updatedCart });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+router.delete('/:cid', async (req, res) => {
+    
+    let { cid } = req.params;
+    
+    if (!isValidObjectId(cid)) {
+      return res.status(400).json({
+        error: `Invalid id`,
+      });
+    }
+    
+    try {
+        let cart = await c.eraseCart(cid);
+        if (cart.deletedCount > 0) {
+            let erased = await c.getCarts();
+            return res.json({ payload: `Cart ${cid} deleted`, erased });
+          } else {
+            return res.status(404).json({ error: `Cart ${cid} doesnt exist` });
+          }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('An error has occurred');
+    }
+    
+});
+
 export default router;

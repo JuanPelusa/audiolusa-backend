@@ -42,8 +42,29 @@ class cartsManagerMo {
             console.error(error);
         }
     } 
-    async eraseProduct(productId) {
-        return await productsModel.deleteOne({ _id: productId });
+
+    async removeProductFromCart(cartId, productId) {
+        try {
+            let cart = await cartsModel.findById(cartId);
+            if (!cart) {
+                throw new Error(`Cart ${cartId} not found`);
+            }
+            
+            const productIndex = cart.products.findIndex(p => p.id === productId);
+            if (productIndex !== -1) {
+                cart.products.splice(productIndex, 1);
+                await cart.save();
+                return cart;
+            } else {
+                throw new Error(`Product ${productId} not found in cart ${cartId}`);
+            }
+        } catch (error) {
+            throw new Error(`Error removing product from cart: ${error.message}`);
+        }
+    }
+
+    async eraseCart(cartId) {
+        return await cartsModel.deleteOne({ _id: cartId });
     }
 }
 
