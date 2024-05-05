@@ -28,7 +28,7 @@ app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 
 const server = app.listen(PORT, () => {
-    console.log(`Running on ${PORT}`);
+    console.log(`Running on port ${PORT}`);
 });
 
 export const io =  new Server(server)

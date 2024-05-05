@@ -25,12 +25,3 @@ socket.on('Product deleted', productErased => {
 })
 
 
-socket.on("id", async (name) => {
-    let messages = await messagesModel.find();
-    socket.emit("previousMessages", messages);
-    socket.broadcast.emit("newUser", name);
-});
-socket.on("newMessage", async (name, message) => {
-await messagesModel.create({ user: name, message: message });
-    io.emit("send", name, message);
-});

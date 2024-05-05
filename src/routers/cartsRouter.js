@@ -12,6 +12,7 @@ router.get('/', async (req, res) => {
     try {
         let cart = await c.getCarts();
         res.json({cart})
+        console.log({ cart })
     } catch (error) {
         console.log(error);
         res.status(500).send('An error occurred');
@@ -32,11 +33,11 @@ router.get('/:cid', async (req, res) => {
     
     try {
         let { cid } = req.params;
-        let cart = await c.getCartById(cid);
-        if (cart === 'Not found') {
+        let cartid = await c.getCartById(cid);
+        if (cartid === 'Not found') {
             res.status(404).json({ error: 'Cart not found' });
         } else {
-            res.json({ cart });
+            res.json({ cartid });
         }
     } catch (error) {
         console.log(error);
