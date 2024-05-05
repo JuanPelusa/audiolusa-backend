@@ -23,9 +23,18 @@ router.get('/', async (req, res) => {
 /* Get a cart by ID */
 
 router.get('/:cid', async (req, res) => {
+    
+    let { cid } = req.params;
+    
+    if (!isValidObjectId(cid)) {
+      return res.status(400).json({
+        error: `Enter a valid MongoDB id`,
+      });
+    }
+    
     try {
         let { cid } = req.params;
-        let cart = await c.getCartById(Number(cid));
+        let cart = await c.getCartById(cid);
         if (cart === 'Not found') {
             res.status(404).json({ error: 'Cart not found' });
         } else {
