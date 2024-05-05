@@ -43,7 +43,7 @@ class cartsManagerMo {
         }
     } 
 
-    async removeProductFromCart(cartId, productId) {
+    async removeFromCart(cartId, productId) {
         try {
             let cart = await cartsModel.findById(cartId);
             if (!cart) {

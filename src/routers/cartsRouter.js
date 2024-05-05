@@ -85,7 +85,7 @@ router.delete('/:cid/product/:pid', async (req, res) => {
     }
 
     try {
-        const updatedCart = await c.removeProductFromCart(cid, pid);
+        const updatedCart = await c.removeFromCart(cid, pid);
         res.json({ payload: `Product ${pid} removed from cart ${cid}`, updatedCart });
     } catch (error) {
         res.status(500).json({ error: error.message });
