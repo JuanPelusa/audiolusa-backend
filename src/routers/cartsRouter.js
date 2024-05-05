@@ -1,11 +1,9 @@
 import { Router } from 'express';
 import cartsManagerMo from '../dao/cartsManagerMo.js';
 import { isValidObjectId } from "mongoose";
-import path from "path";
-import __dirname from "../utils.js";
 
 const router = Router();
-const c = new cartsManagerMo(path.join(__dirname, "/data/products.json"));
+const c = new cartsManagerMo();
 
 
 /* Get all carts */
@@ -28,7 +26,7 @@ router.get('/:cid', async (req, res) => {
     
     if (!isValidObjectId(cid)) {
       return res.status(400).json({
-        error: `Enter a valid MongoDB id`,
+        error: `Invalid id`,
       });
     }
     
@@ -64,14 +62,14 @@ router.post('/:cid/product/:pid', async (req, res) => {
     let { cid, pid } = req.params;
   if (!isValidObjectId(cid, pid)) {
     return res.status(400).json({
-      error: `Enter a valid MongoDB id`,
+      error: `Invalid id`,
     });
   }
 
   try {
     await c.addProducts(cid, pid);
     let cartUpdated = await c.getCartById(cid);
-    res.json({ payload: cartUpdated });
+    res.json({ payload: `Cart updated`, cartUpdated });
   } catch (error) {
     res
       .status(300)

@@ -1,12 +1,10 @@
 import { Router } from 'express';
 import productManager from '../dao/productManagerMo.js';
-import path from "path";
-import __dirname from "../utils.js";
 import { io } from '../app.js';
 import { isValidObjectId } from 'mongoose';
 
 const router = Router();
-const p = new productManager(path.join(__dirname, "/data/products.json"));
+const p = new productManager();
 
 /* Get all products */
 
