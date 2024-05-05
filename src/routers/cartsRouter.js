@@ -60,21 +60,20 @@ router.post('/', async (req, res) => {
 
 router.post('/:cid/product/:pid', async (req, res) => {
     let { cid, pid } = req.params;
-  if (!isValidObjectId(cid, pid)) {
-    return res.status(400).json({
-      error: `Invalid id`,
-    });
-  }
+    if (!isValidObjectId(cid, pid)) {
+        return res.status(400).json({
+        error: `Invalid id`,
+        });
+    }
 
-  try {
-    await c.addProducts(cid, pid);
-    let cartUpdated = await c.getCartById(cid);
-    res.json({ payload: `Cart updated`, cartUpdated });
-  } catch (error) {
-    res
-      .status(300)
-      .json({ error: `error when adding product ${pid} to cart ${cid}` });
-  }
+    try {
+        await c.addProductToCart(cid, pid);
+        let cartUpdated = await c.getCartById(cid);
+        res.json({ payload: `Cart updated`, cartUpdated });
+    } catch (error) {
+        res.status(300)
+        .json({ error: `error when adding product ${pid} to cart ${cid}` });
+    }
 });
 
 export default router;

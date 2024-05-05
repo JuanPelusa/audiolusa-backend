@@ -1,4 +1,5 @@
 import { cartsModel } from "./models/cartsModel.js";
+import productManager from "./productManagerMo.js";
 
 class cartsManagerMo {
 
