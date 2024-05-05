@@ -1,23 +1,19 @@
 import { Router } from 'express';
-import cartsManagerFs from '../dao/cartsManagerFs.js';
+import cartsManagerMo from '../dao/cartsManagerMo.js';
+import { isValidObjectId } from "mongoose";
 import path from "path";
 import __dirname from "../utils.js";
 
 const router = Router();
-const c = new cartsManagerFs(path.join(__dirname, "/data/products.json"));
+const c = new cartsManagerMo(path.join(__dirname, "/data/products.json"));
 
 
 /* Get all carts */
 
-router.get('/all/carts', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        let { all, carts } = req.params;
-        let allCarts = await c.getCarts(all, carts);
-        if (allCarts === 'Not found') {
-            res.status(404).json({ error: 'Cart not found' });
-        } else {
-            res.json({ allCarts });
-        }
+        let cart = await c.getCarts();
+        res.json({cart})
     } catch (error) {
         console.log(error);
         res.status(500).send('An error occurred');
@@ -46,7 +42,7 @@ router.get('/:cid', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         let newCart = await c.createCart();
-        res.status(201).json({ cart: newCart });
+        res.status(201).json({ payload: `New cart created`, newCart });
     } catch (error) {
         console.log(error);
         res.status(500).send('An error occurred');
@@ -56,14 +52,22 @@ router.post('/', async (req, res) => {
 /* Add a product to a cart */
 
 router.post('/:cid/product/:pid', async (req, res) => {
-    try {
-        let { cid, pid } = req.params;
-        let updatedCart = await c.addProductToCart(Number(cid), Number(pid));
-        res.json({ cart: updatedCart });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('An error occurred');
-    }
+    let { cid, pid } = req.params;
+  if (!isValidObjectId(cid, pid)) {
+    return res.status(400).json({
+      error: `Enter a valid MongoDB id`,
+    });
+  }
+
+  try {
+    await c.addProducts(cid, pid);
+    let cartUpdated = await c.getCartById(cid);
+    res.json({ payload: cartUpdated });
+  } catch (error) {
+    res
+      .status(300)
+      .json({ error: `error when adding product ${pid} to cart ${cid}` });
+  }
 });
 
 export default router;

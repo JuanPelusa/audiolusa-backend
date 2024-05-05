@@ -23,3 +23,14 @@ socket.on('Product deleted', productErased => {
     let p = document.querySelectorAll(`#product-${productErased}`);
     p.forEach(e => e.remove());
 })
+
+
+socket.on("id", async (name) => {
+    let messages = await messagesModel.find();
+    socket.emit("previousMessages", messages);
+    socket.broadcast.emit("newUser", name);
+});
+socket.on("newMessage", async (name, message) => {
+await messagesModel.create({ user: name, message: message });
+    io.emit("send", name, message);
+});

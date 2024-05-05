@@ -1,7 +1,4 @@
-//import fs from "fs";
-
 import { productsModel } from "./models/productsModel.js";
-
 class productManagerMo {
 
   /* Adding products */
@@ -57,8 +54,8 @@ class productManagerMo {
 
   /* Deleting products */
 
-  async eraseProduct(productId) {
-    return await productsModel.deleteOne({ _id: productId });
+  async eraseProduct(pid) {
+    return await productsModel.deleteOne({ _id: pid });
   }
 }
 
