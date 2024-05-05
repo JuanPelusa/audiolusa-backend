@@ -6,24 +6,30 @@ class productManagerMo {
 
   /* Adding products */
 
-  async addProduct(id, title, description, code, price, status = true, stock, images = [], category) {
+  async addProduct({
+      id,
+      title,
+      description,
+      code,
+      price,
+      status,
+      stock,
+      images = [],
+      category  // tambien pasar en el body de la request como array
+  }) {
+    let newProduct = {
+      id,
+      title,
+      description,
+      code,
+      price,
+      status,
+      stock,
+      images,
+      category
+    };
 
-      if (!id || !title || !description || !code || !price || !status || !stock || !images || !category)
-        return "All data are required (title, description, code, price, status, stock, image, category)";
-
-      const newProduct = {
-        id,
-        title,
-        description,
-        code,
-        price,
-        status,
-        stock,
-        images,
-        category,
-      };
-
-      await productsModel.create(newProduct);
+    await productsModel.create(newProduct);
 
   }
 

@@ -48,24 +48,27 @@ router.get('/:pid', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    
-    let exist = await p.getProductsBy({ code });
-        if (exist) {
-          return res.status(400).json({
-            error: `There is already another product with the code ${code}`,
-          });
-        }
-    try {
-        let { id, title, description, code, price, status, stock, images, category } = req.body;
-        let result = await p.addProduct(id, title, description, code, price, status, stock, images, category);
-        io.emit('New product', result);
-        res.status(200).json({ result });
-        
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('An error has occurred');
+
+  let { id, title, description, code, price, status, stock, images, category } = req.body;
+  if (!id || !title || !description || !code || !price || !status || !stock || !images || !category)
+  return req.json({ error: "All data are required"});
+
+  let codeRepeat = await p.getProductsBy({ code });
+    if (codeRepeat) {
+      return res.status(400).json({
+      error: `There is already another product with the code ${code}`,
+      });
     }
 
+  try {
+    await p.addProduct({ ...req.body });
+    let newProduct = await p.getProducts();
+    io.emit('New product', newProduct);
+      res.status(200).json({payload: `Product added sucessfully`, newProduct});
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('An error has occurred');
+  }
 });
 
 router.put('/:pid', async (req, res) => {
@@ -80,25 +83,6 @@ router.put('/:pid', async (req, res) => {
 
     let update = req.body;
 
-    if (update._id) {
-      delete update._id;
-    }
-  
-    if (update.code) {
-      let exist;
-      try {
-        exist = await p.getProductsBy({ code: update.code });
-        if (exist) {
-          return res.status(400).json({
-            error: `There is already another product with the code ${toUpdate.code}`,
-          });
-        }
-      } catch (error) {
-        return res.status(500).json({
-          error: `${error.message}`,
-        });
-      }
-    }
     try {
         let result = await p.updateProduct(pid, update);
         return res.json(result);
