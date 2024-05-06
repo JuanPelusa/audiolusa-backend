@@ -19,7 +19,7 @@ Swal.fire({
         text: `${name} is connected`,
         position: "top right",
         style: {
-          background: "linear-gradient(to right, #00b09b, #96c93d)",
+          background: "linear-gradient(to right, #ffa604, #00d4ff)",
         },
         duration: 5000,
       }).showToast();
