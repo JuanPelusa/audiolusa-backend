@@ -42,3 +42,31 @@ th {
 td {
     font-size: 14px;
 }
+.chat-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.message {
+    width: 30%;
+    height: 50px;
+    border: #5f9ea0 solid 2px; 
+    border-radius: 8px; 
+    text-align: center; 
+    margin: 5px;
+}
+.chatResult {
+    background-color: #3c7779;
+    border: #817f7f solid 2px; 
+    border-radius: 8px;
+    margin: 5px;
+}
+.msg {
+    width: 70%;
+    border: 1px solid #555;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: wheat;
+    margin-top: 5px;
+}

@@ -7,6 +7,7 @@ import __dirname from './utils.js';
 import viewsRouter from './routers/viewsRouter.js';
 import { Server } from 'socket.io';
 import mongoose from "mongoose";
+import { messagesModel } from "./dao/models/messagesModel.js";
 
 const app = express();
 const PORT = 3000;
@@ -31,11 +32,30 @@ const server = app.listen(PORT, () => {
     console.log(`Running on port ${PORT}`);
 });
 
+let users = [];
+
 export const io =  new Server(server)
 
 io.on('connection', socket => {
-    console.log(`Connection success`)
-})
+    console.log(`Connection success`);
+    socket.on("id", async name => {
+    users.push({id:socket.id, name})
+    socket.broadcast.emit('newUser', name)
+      let messages = await messagesModel.find();
+      socket.emit("previousMessages", messages);
+      socket.broadcast.emit("newUser", name);
+    });
+    socket.on("newMessage", async (userName, message) => {
+      await messagesModel.create({ user: userName, message: message });
+      io.emit("sendMessage", userName, message);
+    });
+    socket.on("disconnect", () => {
+        let user = users.find(u => u.id === socket.id)
+        if(user){
+            io.emit("userOut", user.name)
+        }
+    })
+  });
 
 io.emit('New product'. products)
 

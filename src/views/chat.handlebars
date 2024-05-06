@@ -1,0 +1,29 @@
+<header>
+    <nav class="container-fluid mainHeader">
+        <img class="fluff" src="/images/logo-brand-3d.png" alt="">
+    <ul>
+        <li>
+            <a class="linkTo" href="/">Home</a>
+        </li>
+            <li>
+                <a class="linkTo" href="/products">Products</a>
+            </li>
+        <li>
+            <a class="linkTo" href="/chat">Chat</a>
+        </li>
+    </ul>
+  </nav>
+</header>
+<main class="container">
+    <div class="chat-form">
+        <input class="message" type="text" id="message" placeholder="Leave a message" />
+            <div class="container-fluid chatResult" id="messages">    
+            </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>
