@@ -10,8 +10,6 @@ const productManager = new ProductManager();
 
 router.get('/', async (req, res) => {
 
-
-
     try {
       let { limit, sort, page, ...filters } = req.query;
       let products = await productManager.getProducts(limit, page, sort, filters);
@@ -37,7 +35,7 @@ router.get('/:pid', async (req, res) => {
       }
 
     try {
-        let productById = await p.getProductsBy({ _id: pid});
+        let productById = await productManager.getProductsBy({ _id: pid});
         res.status(200).json({ productById });
         console.log('Response ID:', productById);
     } catch (error) {
@@ -52,7 +50,7 @@ router.post('/', async (req, res) => {
   if (!id || !title || !description || !code || !price || !status || !stock || !images || !category)
   return req.json({ error: "All data are required"});
 
-  let codeRepeat = await p.getProductsBy({ code });
+  let codeRepeat = await productManager.getProductsBy({ code });
     if (codeRepeat) {
       return res.status(400).json({
       error: `There is already another product with the code ${code}`,
@@ -60,8 +58,8 @@ router.post('/', async (req, res) => {
     }
 
   try {
-    await p.addProduct({ ...req.body });
-    let newProduct = await p.getProducts();
+    await productManager.addProduct({ ...req.body });
+    let newProduct = await productManager.getProducts();
     io.emit('New product', newProduct);
       res.status(200).json({payload: `Product added sucessfully`, newProduct});
     } catch (error) {
@@ -83,7 +81,7 @@ router.put('/:pid', async (req, res) => {
     let update = req.body;
 
     try {
-        let result = await p.updateProduct(pid, update);
+        let result = await productManager.updateProduct(pid, update);
         return res.json(result);
     } catch (error) {
         console.log(error);
@@ -102,7 +100,7 @@ router.delete('/:pid', async (req, res) => {
     }
     
     try {
-        let product = await p.eraseProduct(pid);
+        let product = await productManager.eraseProduct(pid);
         if (product.deletedCount > 0) {
             let erased = await p.getProducts();
             io.emit("eraseProducts", erased);

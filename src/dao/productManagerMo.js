@@ -28,50 +28,78 @@ class ProductManagerMo {
     await productsModel.create(newProduct);
   }
 
-  /* Getting products */
+  /* Getting products by real time */
+
+  async getProductsInTime(){
+    return await productsModel.find().lean();
+}
 
 async getProducts(limit = 6, page = 1, price, query) {
   let options = {
-    limit,
-    page,
-    lean: true,
-    sort: price ? { price } : undefined,
+      limit,
+      page,
+      lean: true,
+      sort: price ? { price } : undefined,
   };
 
-  let filter = query ? query : undefined;
+  let filter = query;
 
   try {
-    let {
-      docs: payload,
-      totalPages,
-      prevPage,
-      nextPage,
-      page,
-      hasPrevPage,
-      hasNextPage,
-      prevLink,
-      nextLink,
-    } = await productsModel.paginate(filter, options);
-    let pageInfo = {
-      status: "success",
-      payload,
-      totalPages,
-      prevPage,
-      nextPage,
-      page,
-      hasPrevPage,
-      hasNextPage,
-      prevLink: hasPrevPage ? `/?page=${prevPage}` : null,
-      nextLink: hasNextPage ? `/?page=${nextPage}` : null,
-    };
+      let { docs: payload, totalPages, prevPage, nextPage, hasPrevPage, hasNextPage } = await productsModel.paginate(filter, options);
 
-    return pageInfo;
+      return {
+          status: "success",
+          products: payload,
+          totalPages,
+          prevPage,
+          nextPage,
+          page,
+          hasPrevPage,
+          hasNextPage,
+          prevLink: hasPrevPage ? `/?page=${prevPage}` : null,
+          nextLink: hasNextPage ? `/?page=${nextPage}` : null,
+      };
   } catch (error) {
-    return {
-      message: error.message,
-    };
+      return {
+          message: error.message,
+      };
   }
 }
+
+  /* Getting products with paginate */
+
+  async getProducts(limit = 6, page = 1, price, query) {
+    let options = {
+        limit,
+        page,
+        lean: true,
+        sort: price ? { price } : undefined,
+    };
+
+    let filter = query;
+
+    try {
+        let { docs: payload, totalPages, prevPage, nextPage, hasPrevPage, hasNextPage } = await productsModel.paginate(filter, options);
+
+        return {
+            status: "success",
+            products: payload,
+            totalPages,
+            prevPage,
+            nextPage,
+            page,
+            hasPrevPage,
+            hasNextPage,
+            prevLink: hasPrevPage ? `/?page=${prevPage}` : null,
+            nextLink: hasNextPage ? `/?page=${nextPage}` : null,
+        };
+    } catch (error) {
+        return {
+            message: error.message,
+        };
+    }
+}
+
 
   /* Getting products by id  */
 
