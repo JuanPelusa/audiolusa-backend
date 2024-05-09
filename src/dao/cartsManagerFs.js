@@ -1,7 +1,7 @@
 import fs from "fs";
-import productManagerFs from "./productManagerFs.js";
+import ProductManagerFs from "./ProductManagerFs.js";
 
-class cartsManagerFs {
+class CartsManagerFs {
   #carts;
   #path;
     constructor(fileRoute) {
@@ -65,7 +65,7 @@ class cartsManagerFs {
               cart.products[existingProductIndex].quantity++;
               
           } else {
-              const p = new productManagerFs('./src/data/products.json');
+              const p = new ProductManagerFs('./src/data/products.json');
               await p.readProductsInFile()
               const product = JSON.stringify(await p.getProductsById(pid), null, 5);
               console.log({product, pid})
@@ -107,4 +107,4 @@ class cartsManagerFs {
     }
   }
 
-export default cartsManagerFs;
+export default CartsManagerFs;

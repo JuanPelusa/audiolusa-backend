@@ -1,5 +1,5 @@
 import { productsModel } from "./models/productsModel.js";
-class productManagerMo {
+class ProductManagerMo {
 
   /* Adding products */
 
@@ -59,4 +59,4 @@ class productManagerMo {
   }
 }
 
-export default productManagerMo;
+export default ProductManagerMo;

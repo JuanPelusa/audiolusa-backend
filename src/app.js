@@ -64,7 +64,7 @@ const connectionToDB = async() => {
         await mongoose.connect(
             "mongodb+srv://JuanPelusa:Sakura86@cluster0.ifijpoq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
     {
-        dbName: "products"
+        dbName: "Ecommerce"
     })
     console.log("Database online")
 

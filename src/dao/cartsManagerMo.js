@@ -1,7 +1,6 @@
 import { cartsModel } from "./models/cartsModel.js";
-import productManager from "./productManagerMo.js";
 
-class cartsManagerMo {
+class CartsManagerMo {
 
     /* Creating carts */
 
@@ -68,4 +67,4 @@ class cartsManagerMo {
     }
 }
 
-export default cartsManagerMo;
+export default CartsManagerMo;

@@ -1,6 +1,6 @@
 import fs from "fs";
 
-class productManager {
+class ProductManagerFs {
   #products;
   #path;
   constructor(fileRoute) {
@@ -136,4 +136,4 @@ class productManager {
   }
 }
 
-export default productManager;
+export default ProductManagerFs;

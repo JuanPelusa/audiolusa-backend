@@ -7,16 +7,16 @@ socket.on('New product', newProduct => {
     productUl.innerHTML+=
     `
     <tr id='product-${p.id}'>
-                <td>${p.id}</td>
-                <td>${p.title}</td>
-                <td>${p.description}</td>
-                <td>${p.code}</td>
-                <td>${p.price}</td>
-                <td>${p.status}</td>
-                <td>${p.stock}</td>
-                <td>${p.category}</td>
-                <td>${p.images}</td>
-            </tr>`
+        <td>${p.id}</td>
+        <td>${p.title}</td>
+        <td>${p.description}</td>
+        <td>${p.code}</td>
+        <td>${p.price}</td>
+        <td>${p.status}</td>
+        <td>${p.stock}</td>
+        <td>${p.category}</td>
+        <td>${p.images}</td>
+    </tr>`
 })
 
 socket.on('Product deleted', productErased => {
