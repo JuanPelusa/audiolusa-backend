@@ -70,3 +70,9 @@ td {
     background-color: wheat;
     margin-top: 5px;
 }
+.pages {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    margin: 10px;
+}

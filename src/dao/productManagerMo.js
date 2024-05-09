@@ -12,7 +12,7 @@ class ProductManagerMo {
       status,
       stock,
       images = [],
-      category  // tambien pasar en el body de la request como array
+      category 
   }) {
     let newProduct = {
       id,
@@ -25,16 +25,52 @@ class ProductManagerMo {
       images,
       category
     };
-
     await productsModel.create(newProduct);
-
   }
-
 
   /* Getting products */
 
-  async getProducts(limit){
-        return await productsModel.find().limit(limit).lean();
+async getProducts(limit = 6, page = 1, price, query) {
+  let options = {
+    limit,
+    page,
+    lean: true,
+    sort: price ? { price } : undefined,
+  };
+
+  let filter = query ? query : undefined;
+
+  try {
+    let {
+      docs: payload,
+      totalPages,
+      prevPage,
+      nextPage,
+      page,
+      hasPrevPage,
+      hasNextPage,
+      prevLink,
+      nextLink,
+    } = await productsModel.paginate(filter, options);
+    let pageInfo = {
+      status: "success",
+      payload,
+      totalPages,
+      prevPage,
+      nextPage,
+      page,
+      hasPrevPage,
+      hasNextPage,
+      prevLink: hasPrevPage ? `/?page=${prevPage}` : null,
+      nextLink: hasNextPage ? `/?page=${nextPage}` : null,
+    };
+
+    return pageInfo;
+  } catch (error) {
+    return {
+      message: error.message,
+    };
+  }
 }
 
   /* Getting products by id  */

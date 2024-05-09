@@ -1,22 +1,39 @@
 import { Router } from 'express';
-import productManager from '../dao/ProductManagerFs.js';
+import ProductManagerMo from '../dao/ProductManagerMo.js';
 
 const router = Router();
-const p = new productManager('./src/data/products.json');
+const productManager = new ProductManagerMo();
 
 router.get('/', async (req, res) => {
-    try {
-        const products = await p.getProducts();
-        return res.status(200).render('home', { products });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send('Internal Server Error');
-    }
-});
+    
+        let { limit, sort, page, ...filters } = req.query;
+        let {
+          payload: products,
+          totalPages,
+          prevPage,
+          nextPage,
+          hasPrevPage,
+          hasNextPage,
+          prevLink,
+          nextLink,
+        } = await productManager.getProducts(limit, page, sort, filters);
+        res.status(200).render("home", {
+          products,
+          totalPages,
+          prevPage,
+          nextPage,
+          page,
+          hasPrevPage,
+          hasNextPage,
+          prevLink,
+          nextLink,
+        });
+      });
+
 
 router.get('/products', async (req, res) => {
     try {
-        const products = await p.getProducts();
+        let {payload:products} = await productManager.getProducts();
         return res.status(200).render('realTime', { products });
     } catch (error) {
         console.error(error);

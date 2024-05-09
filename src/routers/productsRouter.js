@@ -1,19 +1,20 @@
 import { Router } from 'express';
-import productManager from '../dao/productManagerMo.js';
+import ProductManager from '../dao/ProductManagerMo.js';
 import { io } from '../app.js';
 import { isValidObjectId } from 'mongoose';
 
 const router = Router();
-const p = new productManager();
+const productManager = new ProductManager();
 
 /* Get all products */
 
 router.get('/', async (req, res) => {
 
-    let limit = req.query.limit;
+
 
     try {
-        let products = await p.getProducts(limit);
+      let { limit, sort, page, ...filters } = req.query;
+      let products = await productManager.getProducts(limit, page, sort, filters);
         res.status(200).json({ products });
         console.log('Response products:', { products })
         console.log('Response Limit:', { limit });

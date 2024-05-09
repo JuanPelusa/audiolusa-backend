@@ -15,10 +15,24 @@
   </nav>
 </header>
 <main>
-    <div>
-        {{#each products}}
-            <p style="text-align: center;">{{title}}</p>
-            <p style="text-align: center; color:chocolate">{{category}}</p>
-        {{/each}}
-    </div>
+  <div>
+    {{#each products}}
+      <p style="text-align: center; font-size:large">{{title}}</p>
+      <p style="text-align: center; color:green; font-weight: bold">Category</p>
+      <p style="text-align: center; color:chocolate">{{category}}</p>
+      <br>
+    {{/each}}
+  </div>
+  <div class="container-fluid">
+  <div class="pages">
+    <a class="pages" href="./?page=1">First page</a>
+      {{#if hasPrevPage}}
+        <a class="pages" href="./?page={{prevPage}}">Previous</a>
+      {{/if}}
+      {{#if hasNextPage}}
+        <a class="pages" href="./?page={{nextPage}}">Next</a>
+      {{/if}}
+    <a class="pages" href="./?page={{totalPages}}">Last page</a>
+  </div>
+  </div>
 </main>

@@ -1,16 +1,16 @@
 import { Router } from 'express';
-import cartsManagerMo from '../dao/cartsManagerMo.js';
+import CartsManagerMo from '../dao/CartsManagerMo.js';
 import { isValidObjectId } from "mongoose";
 
 const router = Router();
-const c = new cartsManagerMo();
+const cartsManager = new CartsManagerMo();
 
 
 /* Get all carts */
 
 router.get('/', async (req, res) => {
     try {
-        let cart = await c.getCarts();
+        let cart = await cartsManager.getCarts();
         res.json({cart})
         console.log({ cart })
     } catch (error) {
@@ -33,7 +33,7 @@ router.get('/:cid', async (req, res) => {
     
     try {
         let { cid } = req.params;
-        let cartid = await c.getCartById(cid);
+        let cartid = await cartsManager.getCartById(cid);
         if (cartid === 'Not found') {
             res.status(404).json({ error: 'Cart not found' });
         } else {
@@ -49,7 +49,7 @@ router.get('/:cid', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        let newCart = await c.createCart();
+        let newCart = await cartsManager.createCart();
         res.status(201).json({ payload: `New cart created`, newCart });
     } catch (error) {
         console.log(error);
@@ -61,7 +61,7 @@ router.post('/', async (req, res) => {
 
 router.post('/:cid/product/:pid', async (req, res) => {
     let { cid, pid } = req.params;
-    if (!isValidObjectId(cid, pid)) {
+    if (!isValidObjectId(cid) || !isValidObjectId(pid)) {
         return res.status(400).json({
         error: `Invalid id`,
         });
@@ -69,7 +69,7 @@ router.post('/:cid/product/:pid', async (req, res) => {
 
     try {
         await c.addProductToCart(cid, pid);
-        let cartUpdated = await c.getCartById(cid);
+        let cartUpdated = await cartsManager.getCartById(cid);
         res.json({ payload: `Cart updated`, cartUpdated });
     } catch (error) {
         res.status(300)
@@ -85,7 +85,7 @@ router.delete('/:cid/product/:pid', async (req, res) => {
     }
 
     try {
-        const updatedCart = await c.removeFromCart(cid, pid);
+        const updatedCart = await cartsManager.removeFromCart(cid, pid);
         res.json({ payload: `Product ${pid} removed from cart ${cid}`, updatedCart });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -105,7 +105,7 @@ router.delete('/:cid', async (req, res) => {
     try {
         let cart = await c.eraseCart(cid);
         if (cart.deletedCount > 0) {
-            let erased = await c.getCarts();
+            let erased = await cartsManager.getCarts();
             return res.json({ payload: `Cart ${cid} deleted`, erased });
           } else {
             return res.status(404).json({ error: `Cart ${cid} doesnt exist` });
