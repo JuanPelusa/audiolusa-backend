@@ -6,7 +6,7 @@ const productManager = new ProductManagerMo();
 
 router.get('/', async (req, res) => {
     
-        const { page, limit, sort, ...filters } = req.query;
+        const { limit, sort, page, ...filters } = req.query;
         let {
           payload: products,
           totalPages,
@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
           hasNextPage,
           prevLink,
           nextLink,
-        } = await productManager.getProducts(page, limit, sort, filters);
-        res.status(200).render('home', {
+        } = await productManager.getProducts(limit, page, sort, filters);
+        res.status(200).render("home", {
           products,
           totalPages,
           prevPage,
@@ -42,7 +42,7 @@ router.get('/products', async (req, res) => {
 });
 
 router.get("/chat", (req, res) => {
-    res.status(200).render('chat');
+    res.status(200).render("chat");
   });
 
 export default router;
