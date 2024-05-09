@@ -46,6 +46,18 @@
           {{/each}}  
         </tbody>
     </table>
+    <div class="container-fluid">
+  <div class="pages">
+    <a class="pages" href="./?page=1">First page</a>
+      {{#if hasPrevPage}}
+        <a class="pages" href="./?page={{prevPage}}">Previous</a>
+      {{/if}}
+      {{#if hasNextPage}}
+        <a class="pages" href="./?page={{nextPage}}">Next</a>
+      {{/if}}
+    <a class="pages" href="./?page={{totalPages}}">Last page</a>
+  </div>
+  </div>
 </main>
 
 <script src="/socket.io/socket.io.js"></script>
