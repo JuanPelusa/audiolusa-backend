@@ -100,13 +100,13 @@ router.delete('/:pid', async (req, res) => {
     }
     
     try {
-        let product = await productManager.eraseProduct(pid);
+        let product = await productManager.eraseProduct({ _id: pid});
         if (product.deletedCount > 0) {
-            let erased = await p.getProducts();
+            let erased = await productManager.getProducts();
             io.emit("eraseProducts", erased);
             return res.json({ payload: `Product ${pid} deleted` });
           } else {
-            return res.status(404).json({ error: `Product ${id} doesnt exist` });
+            return res.status(404).json({ error: `Product ${pid} doesnt exist` });
           }
     } catch (error) {
         console.log(error);
